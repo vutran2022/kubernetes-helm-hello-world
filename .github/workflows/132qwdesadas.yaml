@@ -2,17 +2,17 @@ name: 132qwdesadas
 "on":
     push:
         branches:
-            - aks-devhub-aohnw
+            - aks-devhub-atuhc
     workflow_dispatch: {}
 env:
-    ACR_RESOURCE_GROUP: vuaksplaygroundregistry
-    AZURE_CONTAINER_REGISTRY: vuaksplaygroundregistry
+    ACR_RESOURCE_GROUP: vu-rg
+    AZURE_CONTAINER_REGISTRY: vuaksplaygroundregistry1
     CHART_OVERRIDE_PATH: ./helloworld-chart/values.yaml
     CHART_OVERRIDES: ""
     CHART_PATH: ./helloworld-chart
     CLUSTER_NAME: vu-aks-playground
     CLUSTER_RESOURCE_GROUP: vu-rg
-    CONTAINER_NAME: aaaaa
+    CONTAINER_NAME: aaaaaa
 jobs:
     buildImage:
         permissions:
@@ -65,4 +65,4 @@ jobs:
                 action: deploy
                 images: ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }}
                 manifests: ${{ steps.bake.outputs.manifestsBundle }}
-                namespace: namespace-workflow-1664554197226
+                namespace: namespace-workflow-1664594907075
