@@ -1,4 +1,12 @@
-FROM busybox
-ADD app/index.html /www/index.html
+FROM maven:3-eclipse-temurin-11 as BUILD
+
+COPY . /usr/src/app
+RUN mvn --batch-mode -f /usr/src/app/pom.xml clean package
+
+FROM eclipse-temurin:11-jre
+ENV PORT 80
 EXPOSE 80
-CMD httpd -p 80 -h /www; tail -f /dev/null
+COPY --from=BUILD /usr/src/app/target /opt/target
+WORKDIR /opt/target
+
+CMD ["/bin/bash", "-c", "find -type f -name '*-SNAPSHOT.jar' | xargs java -jar"]
